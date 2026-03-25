@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { apiServices } from "../../services/api";
+import { queryClient } from "../../App";
 
 export default function PostFooter({
   postId,
@@ -30,12 +31,13 @@ export default function PostFooter({
       const response = await apiServices.getPostLikes(postId);
 
       if (response.success) {
-        if (liked) {
-          setLikes((prev) => prev - 1);
-        } else {
-          setLikes((prev) => prev + 1);
-        }
-        setLiked(!liked);
+        setLiked((prevLiked) => {
+          setLikes((prevLikes) => (prevLiked ? prevLikes - 1 : prevLikes + 1));
+          return !prevLiked;
+        });
+
+        queryClient.invalidateQueries(["posts"]);
+        queryClient.invalidateQueries(["myPosts"]);
       }
     } finally {
       setIsLoading(false);

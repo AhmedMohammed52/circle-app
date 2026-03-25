@@ -41,7 +41,7 @@ export default function Profile() {
         </section>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start w-full">
-          <aside className="lg:col-span-4 sticky top-28 h-fit space-y-6">
+          <aside className="lg:col-span-4 lg:sticky lg:top-28 h-fit space-y-6">
             <AboutProfile user={user} isMyProfile={isMyProfile} />
           </aside>
 
