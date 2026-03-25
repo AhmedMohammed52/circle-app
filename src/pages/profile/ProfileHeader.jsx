@@ -21,6 +21,8 @@ export default function ProfileHeader({ user, myPosts }) {
 
       await queryClient.invalidateQueries(["userProfile"]);
       await queryClient.invalidateQueries(["loggedUser"]);
+      await queryClient.invalidateQueries(["posts"]);
+      await queryClient.invalidateQueries(["allPosts"]);
 
       successToast("Profile picture updated successfully!");
     } catch (error) {
