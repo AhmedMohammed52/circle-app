@@ -1,5 +1,5 @@
 import { HeroUIProvider, ToastProvider } from "@heroui/react";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import Feed from "./pages/feed/Feed";
 import AuthPage from "./pages/AuthPage";
 import Profile from "./pages/profile/Profile";
@@ -14,82 +14,73 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 export const queryClient = new QueryClient();
 
-const router = createBrowserRouter([
-  {
-    path: "",
-    element: <MainLayout />,
-    children: [
-      {
-        index: true,
-        element: (
-          <ProtectedRoute>
-            <Feed />
-          </ProtectedRoute>
-        ),
-      },
-      {
-        path: "profile/:userId",
-        element: (
-          <ProtectedRoute>
-            <Profile />
-          </ProtectedRoute>
-        ),
-      },
-      {
-        path: "posts/:postId",
-        element: (
-          <ProtectedRoute>
-            <PostDetails />
-          </ProtectedRoute>
-        ),
-      },
-      { path: "*", element: <NotFound /> },
-    ],
-  },
-  {
-    path: "/",
-    element: <AuthLayout />,
-    children: [
-      {
-        path: "auth",
-        element: (
-          <ProtectAuthRoute>
-            <AuthPage />
-          </ProtectAuthRoute>
-        ),
-      },
-      {
-        path: "signin",
-        element: (
-          <ProtectAuthRoute>
-            <AuthPage />
-          </ProtectAuthRoute>
-        ),
-      },
-      {
-        path: "signup",
-        element: (
-          <ProtectAuthRoute>
-            <AuthPage />
-          </ProtectAuthRoute>
-        ),
-      },
-    ],
-  },
-]);
-
 function App() {
   return (
-    <>
-      <QueryClientProvider client={queryClient}>
-        <AuthContextProvider>
-          <HeroUIProvider>
-            <ToastProvider />
-            <RouterProvider router={router} />
-          </HeroUIProvider>
-        </AuthContextProvider>
-      </QueryClientProvider>
-    </>
+    <QueryClientProvider client={queryClient}>
+      <AuthContextProvider>
+        <HeroUIProvider>
+          <ToastProvider />
+          <HashRouter>
+            <Routes>
+              <Route element={<MainLayout />}>
+                <Route
+                  index
+                  element={
+                    <ProtectedRoute>
+                      <Feed />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="profile/:userId"
+                  element={
+                    <ProtectedRoute>
+                      <Profile />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="posts/:postId"
+                  element={
+                    <ProtectedRoute>
+                      <PostDetails />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route path="*" element={<NotFound />} />
+              </Route>
+
+              <Route element={<AuthLayout />}>
+                <Route
+                  path="auth"
+                  element={
+                    <ProtectAuthRoute>
+                      <AuthPage />
+                    </ProtectAuthRoute>
+                  }
+                />
+                <Route
+                  path="signin"
+                  element={
+                    <ProtectAuthRoute>
+                      <AuthPage />
+                    </ProtectAuthRoute>
+                  }
+                />
+                <Route
+                  path="signup"
+                  element={
+                    <ProtectAuthRoute>
+                      <AuthPage />
+                    </ProtectAuthRoute>
+                  }
+                />
+              </Route>
+            </Routes>
+          </HashRouter>
+        </HeroUIProvider>
+      </AuthContextProvider>
+    </QueryClientProvider>
   );
 }
 
