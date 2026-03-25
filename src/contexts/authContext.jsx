@@ -48,6 +48,7 @@ export default function AuthContextProvider({ children }) {
         setUserData,
         user,
         setUser,
+        getLoggedUserData,
       }}
     >
       {children}

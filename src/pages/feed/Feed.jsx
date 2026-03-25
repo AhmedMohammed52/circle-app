@@ -1,5 +1,3 @@
-import { useContext } from "react";
-import { authContext } from "../../contexts/authContext";
 import { useQuery } from "@tanstack/react-query";
 import { apiServices } from "../../services/api";
 
@@ -14,8 +12,6 @@ import SuggestionsSkelton from "../../components/ui/skelton/SuggestionsSkelton";
 import { Spinner } from "@heroui/react";
 
 export default function Feed() {
-  const { userData } = useContext(authContext);
-
   const {
     data: posts = [],
     isLoading,
@@ -30,7 +26,7 @@ export default function Feed() {
     <div className="bg-[#F0F2F5] min-h-screen pt-24 pb-10">
       <div className="max-w-7xl mx-auto px-4 grid grid-cols-12 gap-8">
         <aside className="hidden lg:block lg:col-span-3 sticky top-24 h-fit">
-          {isLoading ? <ProfileCardSkelton /> : <ProfileCard user={userData} />}
+          {isLoading ? <ProfileCardSkelton /> : <ProfileCard />}
         </aside>
 
         <main className="col-span-12 md:col-span-7 lg:col-span-6 space-y-6 relative">
@@ -53,7 +49,6 @@ export default function Feed() {
           )}
         </main>
 
-        {/* العمود الأيمن */}
         <aside className="hidden md:block md:col-span-5 lg:col-span-3 sticky top-24 h-fit">
           {isLoading ? <SuggestionsSkelton /> : <Suggestions />}
         </aside>
