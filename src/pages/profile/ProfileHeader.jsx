@@ -109,7 +109,9 @@ export default function ProfileHeader({ user, myPosts }) {
               <p className="text-[10px] font-black text-slate-300 uppercase">
                 Followers
               </p>
-              <p className="text-xl font-black text-slate-800">0</p>
+              <p className="text-xl font-black text-slate-800">
+                {user?.followers?.length || user?.followersCount || 0}
+              </p>
             </div>
           </div>
         </div>
