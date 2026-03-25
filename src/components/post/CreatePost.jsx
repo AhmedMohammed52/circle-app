@@ -21,6 +21,7 @@ export default function CreatePost() {
       removeImage();
       setCaption("");
       queryClient.invalidateQueries(["posts"]);
+      queryClient.invalidateQueries(["loggedUser"]);
       successToast("Your Post Created Successfully");
     },
   });
